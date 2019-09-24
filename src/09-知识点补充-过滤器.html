@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body>
+    <div id="app">
+        <p>单价: {{money | moneyFormat()}}</p>
+        <p>总价: {{total | moneyFormat()}}</p>
+        <p>当前时间：{{ now | dateFormat }}</p>
+    </div>
+    <script src="lib/vue.js"></script>
+    <script>
+        // 1. 定义全局过滤器
+        Vue.filter('moneyFormat', (money) => {
+            return '¥' + money + '.000';
+        });
+        Vue.filter('dateFormat', (time) => {
+            let year = time.getFullYear(),
+                m = time.getMonth(),
+                d = time.getDay(),
+                t = time.getHours(),
+                mm = (time.getMinutes()).toString().padStart(2, '0'),
+                s = (time.getSeconds()).toString().padStart(2,"0");
+                return `${year} 年 ${m} 月${d}日 , ${t} 点 ${mm} 分 ${s}秒`;
+        });
+
+        new Vue({
+            el: '#app',
+            data: {
+                money: 189898,
+                total: 1,
+                now: new Date()
+            },
+            methods: {
+
+            },
+            filters: {
+                // 2. 局部过滤器
+                moneyFormat(money) {
+                    return '$' + money + '.0';
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
